@@ -10,6 +10,12 @@ import { withStyles } from 'material-ui/styles'
 import { layoutStyles } from 'styles/layoutStyles'
 import * as globalActions from 'actions/globalActions'
 import * as packagesActions from 'actions/packagesActions'
+import classNames from 'classnames'
+import IconButton from 'material-ui/IconButton'
+import Drawer from 'material-ui/Drawer'
+import Divider from 'material-ui/Divider'
+import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
+import ChevronRightIcon from 'material-ui-icons/ChevronRight'
 import classnames from 'classnames'
 import Grid from 'material-ui/Grid'
 import React from 'react'
@@ -43,7 +49,8 @@ class Layout extends React.Component {
       handleDrawerClose,
       handleDialogOpen,
       handleDialogClose,
-      dialogOpen
+      dialogOpen,
+      theme
     } = this.props
 
     return (
@@ -67,6 +74,29 @@ class Layout extends React.Component {
             position={snackbar.position}
           />
         </main>
+        <Drawer
+          type="permanent"
+          classes={{
+            paper: classNames(
+              classes.drawerPaper,
+              !menuOpen && classes.drawerPaperClose
+            )
+          }}
+          open={menuOpen}
+        >
+          <div className={classes.drawerInner}>
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'rtl' ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </div>
+            <Divider />
+          </div>
+        </Drawer>
       </div>
     )
   }

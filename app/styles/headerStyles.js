@@ -5,6 +5,8 @@ import deepPurple from 'material-ui/colors/deepPurple'
 import pink from 'material-ui/colors/pink'
 import red from 'material-ui/colors/red'
 
+const drawerWidth = 240
+
 export function searchBoxStyles(theme) {
   return {
     root: {
@@ -33,7 +35,6 @@ export function notificationsStyles(theme) {
 }
 
 export function headerStyles(theme) {
-  const drawerWidth = 240
   return {
     appBar: {
       position: 'fixed',
@@ -50,24 +51,6 @@ export function headerStyles(theme) {
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen
-      })
-    },
-    drawerInner: {
-      width: drawerWidth
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar
-    },
-    drawerPaperClose: {
-      width: 60,
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
       })
     },
     menuButton: {

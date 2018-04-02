@@ -16,14 +16,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Drawer from 'material-ui/Drawer'
-import Divider from 'material-ui/Divider'
 import classNames from 'classnames'
 import Icon from 'material-ui/Icon'
 import MenuIcon from 'material-ui-icons/Menu'
 import IconButton from 'material-ui/IconButton'
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
-import ChevronRightIcon from 'material-ui-icons/ChevronRight'
 import AppHeaderContent from 'components/header/AppHeaderContent'
 import SearchBox from 'components/header/SearchBox'
 import Notifications from 'components/header/Notifications'
@@ -96,35 +92,6 @@ class AppHeader extends React.Component {
             />
           </div>
         </AppBar>
-        <Drawer
-          type="permanent"
-          classes={{
-            paper: classNames(
-              classes.drawerPaper,
-              !menuOpen && classes.drawerPaperClose
-            )
-          }}
-          open={menuOpen}
-        >
-          <div className={classes.drawerInner}>
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'rtl' ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
-            <Divider />
-            <AppHeaderContent
-              outdated={outdated}
-              toggleSettings={toggleSettings}
-              handleDrawerClose={handleDrawerClose}
-              handleDialogOpen={handleDialogOpen}
-            />
-          </div>
-        </Drawer>
       </section>
     )
   }

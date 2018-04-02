@@ -1,3 +1,5 @@
+const drawerWidth = 240
+
 export function layoutStyles(theme) {
   return {
     root: {
@@ -39,6 +41,24 @@ export function layoutStyles(theme) {
     button: {
       margin: theme.spacing.unit,
       fontStyle: 'normal'
+    },
+    drawerInner: {
+      width: drawerWidth
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: '0 8px',
+      ...theme.mixins.toolbar
+    },
+    drawerPaperClose: {
+      width: 60,
+      overflowX: 'hidden',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen
+      })
     }
   }
 }
