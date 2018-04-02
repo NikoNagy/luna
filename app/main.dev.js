@@ -197,6 +197,10 @@ app.on('ready', async () => {
     // todo..
   })
 
+  mainWindow.webContents.on('set-mode', (filePath) => {
+    console.log(filePath)
+  })
+
   mainWindow.on('unresponsive', () => {
     // todo..
   })

@@ -4,6 +4,7 @@
 
 import { remote, ipcRenderer } from 'electron'
 import { withStyles } from 'material-ui/styles'
+import { objectEntries } from 'utils'
 import React from 'react'
 import PropTypes from 'prop-types'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
@@ -23,37 +24,14 @@ class AppHeaderContent extends React.Component {
   constructor() {
     super()
     this.openPackage = this.openPackage.bind(this)
-    this.updateMode = this.updateMode.bind(this)
     this.toggleAppSettings = this.toggleAppSettings.bind(this)
     this.toggleDialog = this.toggleDialog.bind(this)
-  }
-  updateMode(directory) {
-    ipcRenderer.send('analyze-json', directory)
   }
   openPackage(e) {
     e.preventDefault()
     const { handleDrawerClose } = this.props
 
-    remote.dialog.showOpenDialog(
-      remote.getCurrentWindow(),
-      {
-        title: 'Open package.json file',
-        buttonLabel: 'Analyze',
-        filters: [
-          {
-            name: 'json',
-            extensions: ['json']
-          }
-        ],
-        openFile: true
-      },
-      (filePath) => {
-        if (filePath) {
-          this.updateMode(filePath[0])
-        }
-        handleDrawerClose()
-      }
-    )
+    handleDrawerClose()
   }
   toggleAppSettings(e) {
     e.preventDefault()
@@ -67,26 +45,33 @@ class AppHeaderContent extends React.Component {
     handleDialogOpen(true)
   }
   render() {
-    const { classes } = this.props
+    const { classes, outdated } = this.props
 
-    return (
-      <section>
-        <List>
-          <ListItem button onClick={this.openPackage}>
-            <ListItemIcon>
-              <Icon className={classes.iconHover}>archive</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Analyze" secondary="Open package.json" />
-          </ListItem>
-          <ListItem button onClick={this.toggleDialog}>
-            <ListItemIcon>
-              <Icon>settings</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Settings" secondary="Application settings" />
-          </ListItem>
-        </List>
-      </section>
-    )
+    if (outdated) {
+      const outdatedArr = objectEntries(outdated)
+
+      return (
+        <section>
+          <List>
+            {outdatedArr.map((o, idx) => {
+              return (
+                <ListItem key={`k-${idx}`} button onClick={this.viewPackage}>
+                  <ListItemIcon>
+                    <Icon className={classes.iconHover}>update</Icon>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={o[0]}
+                    secondary={`${o[1].current} -> ${o[1].latest}`}
+                  />
+                </ListItem>
+              )
+            })}
+          </List>
+        </section>
+      )
+    }
+
+    return null
   }
 }
 

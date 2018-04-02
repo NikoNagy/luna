@@ -49,6 +49,10 @@ class PackagesContainer extends React.Component {
       clearMessages
     } = this.props
 
+    ipcRenderer.on('set-local-mode', (event, directory) => {
+      ipcRenderer.send('analyze-json', directory)
+    })
+
     ipcRenderer.on('install-packages-close', (event) => {
       const { mode, directory } = this.props
 
@@ -137,8 +141,8 @@ class PackagesContainer extends React.Component {
         directory
       })
     })
+
     ipcRenderer.on('action-close', (event, pkg) => {
-      console.log('action-close')
       const { mode, directory } = this.props
 
       if (mode === APP_MODES.LOCAL && directory) {
@@ -151,13 +155,16 @@ class PackagesContainer extends React.Component {
         })
       }
     })
+
     ipcRenderer.on('ipcEvent-error', (event, error) => {
       const { setError, errors } = this.props
       console.error(error)
     })
+
     ipcRenderer.on('ipcEvent-reply', (event, data) => {
       // console.error(data)
     })
+
     ipcRenderer.on('analyze-json-close', (event, directory, content) => {
       setActive(null)
       setPackageActions(null)

@@ -46,7 +46,7 @@ export const objectEntries = obj => {
   return resArray;
 };
 
-export function isUrl(url) {
+export const isUrl = (url) => {
   const matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
   return matcher.test(url);
 }

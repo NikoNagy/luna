@@ -24,9 +24,9 @@ import MenuIcon from 'material-ui-icons/Menu'
 import IconButton from 'material-ui/IconButton'
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft'
 import ChevronRightIcon from 'material-ui-icons/ChevronRight'
-import AppHeaderContent from './AppHeaderContent'
-import SearchBox from './SearchBox'
-import Notifications from './Notifications'
+import AppHeaderContent from 'components/header/AppHeaderContent'
+import SearchBox from 'components/header/SearchBox'
+import Notifications from 'components/header/Notifications'
 
 const { object, func } = PropTypes
 
@@ -47,7 +47,8 @@ class AppHeader extends React.Component {
       toggleDrawer,
       setPackageActions,
       handleDialogOpen,
-      notifications
+      notifications,
+      outdated
     } = this.props
 
     return (
@@ -117,6 +118,7 @@ class AppHeader extends React.Component {
             </div>
             <Divider />
             <AppHeaderContent
+              outdated={outdated}
               toggleSettings={toggleSettings}
               handleDrawerClose={handleDrawerClose}
               handleDialogOpen={handleDialogOpen}
@@ -133,7 +135,8 @@ function mapStateToProps(state) {
     drawerOpen: state.global.drawerOpen,
     mode: state.global.mode,
     directory: state.global.directory,
-    notifications: state.global.messages
+    notifications: state.global.messages,
+    outdated: state.packages.outdated
   }
 }
 

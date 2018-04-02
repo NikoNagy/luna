@@ -16,13 +16,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Dialog from 'common/Dialog'
 import SnackBar from 'common/SnackBar'
-import AppHeader from 'components/header/AppHeader'
-import PackagesContainer from 'containers/Packages'
+import AppHeader from './AppHeader'
+import PackagesContainer from './Packages'
 
 class Layout extends React.Component {
   constructor() {
     super()
     this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+  }
+  componentDidMount() {
+    ipcRenderer.on('set-mode-reply', (event, data) => {
+      console.log(event, data)
+    })
   }
   handleSnackBarClose() {
     const { toggleSnackbar } = this.props
