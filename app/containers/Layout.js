@@ -24,27 +24,20 @@ import Dialog from 'common/Dialog'
 import SnackBar from 'common/SnackBar'
 import AppHeader from './AppHeader'
 import PackagesContainer from './Packages'
+import PlaceHolder from 'common/PlaceHolder'
 
 class Layout extends React.Component {
-  constructor() {
-    super()
-    this.handleSnackBarClose = this.handleSnackBarClose.bind(this)
+  constructor(props) {
+    super(props)
   }
-  componentDidMount() {
-    ipcRenderer.on('set-mode-reply', (event, data) => {
-      console.log(event, data)
-    })
-  }
-  handleSnackBarClose() {
-    const { toggleSnackbar } = this.props
-    toggleSnackbar(false)
-  }
+  componentDidMount() {}
   render() {
     const {
       classes,
       menuOpen,
       snackbar,
       snackBarOpen,
+      toggleSnackbar,
       handleDrawerOpen,
       handleDrawerClose,
       handleDialogOpen,
@@ -68,7 +61,7 @@ class Layout extends React.Component {
           ) : null}
           <SnackBar
             snackBarOpen={snackBarOpen}
-            handleSnackBarClose={this.handleSnackBarClose}
+            handleSnackBarClose={toggleSnackbar}
             actionText={snackbar.actionText}
             message={snackbar.message}
             position={snackbar.position}
@@ -95,6 +88,7 @@ class Layout extends React.Component {
               </IconButton>
             </div>
             <Divider />
+            <PlaceHolder componentPath="components/packages/OutdatedList" />
           </div>
         </Drawer>
       </div>
