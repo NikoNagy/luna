@@ -15,6 +15,9 @@ export function searchBoxStyles(theme) {
     },
     searchBoxLabel: {
       color: '#fff'
+    },
+    searchBoxInput: {
+      borderColor: '#fff'
     }
   }
 }

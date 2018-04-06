@@ -16,7 +16,7 @@ export function layoutStyles(theme) {
       overflow: 'hidden',
       position: 'relative',
       marginTop: 50,
-      marginLeft: 50,
+      marginLeft: 0,
       padding: 25
     },
     paper: {

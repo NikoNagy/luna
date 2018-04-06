@@ -62,19 +62,6 @@ class AppHeader extends React.Component {
               justifyContent: 'space-between'
             }}
           >
-            <Toolbar disableGutters={!menuOpen}>
-              <IconButton
-                aria-label="open menu"
-                onClick={handleDrawerOpen}
-                style={{ color: '#fff' }}
-                className={classNames(
-                  classes.menuButton,
-                  menuOpen && classes.hide
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Toolbar>
             <SearchBox
               setActive={setActive}
               toggleLoader={toggleLoader}
@@ -96,6 +83,20 @@ class AppHeader extends React.Component {
     )
   }
 }
+
+// <Toolbar disableGutters={!menuOpen}>
+//   <IconButton
+//     aria-label="open menu"
+//     onClick={handleDrawerOpen}
+//     style={{ color: '#fff' }}
+//     className={classNames(
+//       classes.menuButton,
+//       menuOpen && classes.hide
+//     )}
+//   >
+//     <MenuIcon />
+//   </IconButton>
+// </Toolbar>
 
 function mapStateToProps(state) {
   return {

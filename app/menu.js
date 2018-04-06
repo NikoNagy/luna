@@ -9,7 +9,6 @@ export default class MenuBuilder {
   constructor(mainWindow) {
     this.mainWindow = mainWindow
   }
-
   buildMenu() {
     if (
       process.env.NODE_ENV === 'development' ||
@@ -31,7 +30,6 @@ export default class MenuBuilder {
 
     return menu
   }
-
   setupDevelopmentEnvironment() {
     this.mainWindow.openDevTools()
     this.mainWindow.webContents.on('context-menu', (e, props) => {
@@ -47,7 +45,6 @@ export default class MenuBuilder {
       ]).popup(this.mainWindow)
     })
   }
-
   sendIpcEvent(opts) {
     const { ipcEvent, mode, directory } = opts
 
@@ -60,7 +57,7 @@ export default class MenuBuilder {
 
     return [Menu]
   }
-
+  openSettings() {}
   openPackageJSON() {
     const { dialog } = require('electron')
 
@@ -82,17 +79,21 @@ export default class MenuBuilder {
       }
     )
   }
-
   buildDefaultTemplate() {
     const templateDefault = [
       {
         label: '&File',
         submenu: [
           {
-            label: '&Open package.json',
+            label: '&Analyze directory',
             accelerator: 'Ctrl+O',
             role: 'open',
             click: () => this.openPackageJSON()
+          },
+          {
+            label: '&Settings',
+            accelerator: 'Ctrl+S',
+            click: () => this.openSettings()
           },
           {
             label: '&Close',

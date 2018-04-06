@@ -67,34 +67,35 @@ class Layout extends React.Component {
             position={snackbar.position}
           />
         </main>
-        <Drawer
-          type="permanent"
-          classes={{
-            paper: classNames(
-              classes.drawerPaper,
-              !menuOpen && classes.drawerPaperClose
-            )
-          }}
-          open={menuOpen}
-        >
-          <div className={classes.drawerInner}>
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'rtl' ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
-            <Divider />
-            <PlaceHolder componentPath="components/packages/OutdatedList" />
-          </div>
-        </Drawer>
       </div>
     )
   }
 }
+
+// <Drawer
+//   variant="temporary"
+//   classes={{
+//     paper: classNames(
+//       classes.drawerPaper,
+//       !menuOpen && classes.drawerPaperClose
+//     )
+//   }}
+//   open={menuOpen}
+// >
+//   <div className={classes.drawerInner}>
+//     <div className={classes.drawerHeader}>
+//       <IconButton onClick={handleDrawerClose}>
+//         {theme.direction === 'rtl' ? (
+//           <ChevronRightIcon />
+//         ) : (
+//           <ChevronLeftIcon />
+//         )}
+//       </IconButton>
+//     </div>
+//     <Divider />
+//     <PlaceHolder componentPath="components/packages/OutdatedList" />
+//   </div>
+// </Drawer>
 
 function mapStateToProps(state) {
   return {

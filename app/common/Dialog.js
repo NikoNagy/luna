@@ -15,7 +15,6 @@ class AlertDialog extends React.Component {
   constructor(props) {
     super(props)
   }
-
   render() {
     const { open, handleDialogClose } = this.props
 
