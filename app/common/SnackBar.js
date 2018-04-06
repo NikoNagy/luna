@@ -20,7 +20,7 @@ const styles = (theme) => {
 const SnackbarAction = (props) => {
   const { actionText, action } = props
   return (
-    <Button color="secondary" size="small" onClick={(e) => action(e)}>
+    <Button size="small" onClick={(e) => action(e)}>
       {actionText}
     </Button>
   )
@@ -48,7 +48,7 @@ class SnackBar extends React.Component {
       loader,
       actionText
     } = this.props
-    
+
     return (
       <Snackbar
         action={

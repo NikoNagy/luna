@@ -84,7 +84,7 @@ class PackagesContainer extends React.Component {
         this.setupPackagesFromResponse(packages)
       }
 
-      setActive(null)
+      // setActive(null)
       setPackageActions(null)
       toggleMainLoader(false)
       toggleLoader(false)

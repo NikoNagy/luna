@@ -43,7 +43,6 @@ const NotificationsList = (props) => {
                 secondary={
                   <Button
                     size="small"
-                    color="secondary"
                     onClick={(e) => {
                       if (requires && typeof requires === 'string') {
                         const indexOfAt = requires.indexOf('@')
