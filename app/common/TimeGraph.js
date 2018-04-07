@@ -10,6 +10,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
+import semver2int from 'semver2int'
 
 const MARGINS = {
   top: 20,
