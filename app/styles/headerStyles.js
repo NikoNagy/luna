@@ -10,14 +10,14 @@ const drawerWidth = 240
 export function searchBoxStyles(theme) {
   return {
     root: {
-      margin: '0 10px',
+      margin: '5px 10px 0px 30px',
       padding: 0
     },
     searchBoxLabel: {
       color: '#fff'
     },
     searchBoxInput: {
-      borderColor: '#fff'
+      color: '#fff'
     }
   }
 }
@@ -46,7 +46,7 @@ export function headerStyles(theme) {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
       }),
-      backgroundColor: theme.palette.secondary.light
+      backgroundColor: theme.palette.primary.light
     },
     appBarShift: {
       marginLeft: drawerWidth,
