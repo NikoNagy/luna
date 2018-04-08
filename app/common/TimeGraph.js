@@ -10,7 +10,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
-import semver2int from 'semver2int'
+import { pluck } from 'ramda'
 
 const MARGINS = {
   top: 20,
@@ -20,16 +20,22 @@ const MARGINS = {
 }
 
 const parseDate = d3.timeParse('%Y-%m-%dT%H:%M:%SZ')
+const styles = (theme) => ({
+  root: {}
+})
 
 class TimeGraph extends React.Component {
   constructor(props) {
     super(props)
     this._drawChart = this._drawChart.bind(this)
   }
-  _drawChart(versions, dates) {
+  _drawChart(data) {
+    const { classes } = this.props
     const svgEl = this.svgEl
+    const dates = pluck('date')(data).sort()
+    const versions = pluck('version')(data).sort()
 
-    if (svgEl) {
+    if (svgEl && versions.length) {
       let svg = d3.select(svgEl)
 
       const width = svg.attr('width') - MARGINS.left - MARGINS.right,
@@ -57,67 +63,92 @@ class TimeGraph extends React.Component {
         .attr('transform', 'translate(30, 10)')
         .call(d3.axisLeft(scaleY))
 
-      //merge versions && dates
-      console.log(versions.length, dates.length)
+      const tooltip = d3
+        .select('body')
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('z-index', '999')
 
-      // svg
-      //   .append('g')
-      //   .attr('transform', 'translate(30, 10)')
-      //   .selectAll('.dot')
-      //   .data(data)
-      //   .enter()
-      //   .append('circle')
-      //   .attr('class', 'dot')
-      //   .attr('r', 3.5)
-      //   .attr('cx', function(d) {
-      //     return scaleX(new Date(d.date))
-      //   })
-      //   .attr('cy', function(d) {
-      //     return scaleY(d.version)
-      //   })
-      //   .style('fill', 'blue')
+      svg
+        .append('g')
+        .attr('transform', 'translate(30, 10)')
+        .selectAll('.dot')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('class', 'dot')
+        .attr('r', 1.5)
+        .attr('cx', function(d) {
+          return scaleX(new Date(d.date))
+        })
+        .attr('cy', function(d) {
+          return scaleY(d.version)
+        })
+        .style('fill', '#c2185b')
+        .on('mouseover', function(d) {
+          tooltip
+            .transition()
+            .duration(200)
+            .style('opacity', 0.9)
+          tooltip
+            .html(d.date + '<br/>' + d.version)
+            .style('left', d3.event.clientX + 'px')
+            .style('top', d3.event.clientY - 28 + 'px')
+        })
+        .on('mouseout', function(d) {
+          tooltip
+            .transition()
+            .duration(500)
+            .style('opacity', 0)
+        })
     }
   }
   componentDidMount() {
-    const { active } = this.props
+    const { active, classes } = this.props
     const { time } = active || {}
+    let data = []
 
     if (time && typeof time === 'object') {
       try {
+        const _versions = Object.keys(time).sort()
+        let dates = Object.values(time).sort()
+
+        const versions =
+          _versions &&
+          _versions
+            .map((version) => {
+              const isBetaVersion = isBeta(version)
+              const isAlphaVersion = isAlpha(version)
+              const isRCVersion = isRC(version)
+
+              if (
+                !isBetaVersion &&
+                !isAlphaVersion &&
+                !isRCVersion &&
+                version.indexOf('.') > -1
+              ) {
+                const parts = version.split('.')
+                return parseFloat(Number(parts[0] + '.' + parts[1] + parts[2]))
+              }
+            })
+            .filter((v, i) => {
+              if (!v) {
+                dates.splice(i, 1)
+              }
+              return v
+            })
+
+        versions.forEach((v, i) => {
+          data.push({
+            version: v,
+            date: dates[i]
+          })
+        })
       } catch (e) {
         throw new Error(e)
       }
 
-      const _versions = Object.keys(time)
-      let dates = Object.values(time).sort()
-
-      const versions =
-        _versions &&
-        _versions
-          .map((version) => {
-            const isBetaVersion = isBeta(version)
-            const isAlphaVersion = isAlpha(version)
-            const isRCVersion = isRC(version)
-
-            if (
-              !isBetaVersion &&
-              !isAlphaVersion &&
-              !isRCVersion &&
-              version.indexOf('.') > -1
-            ) {
-              const parts = version.split('.')
-              return parseFloat(Number(parts[0] + '.' + parts[1] + parts[2]))
-            }
-          })
-          .filter((v, i) => {
-            if (!v) {
-              dates.splice(i, 1)
-            }
-            return v
-          })
-          .sort()
-
-      this._drawChart(versions, dates)
+      this._drawChart(data)
     }
   }
   render() {
@@ -135,4 +166,4 @@ class TimeGraph extends React.Component {
   }
 }
 
-export default TimeGraph
+export default withStyles(styles)(TimeGraph)

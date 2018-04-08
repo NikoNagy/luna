@@ -246,6 +246,19 @@ label {
   animation-delay: 0.4s;
 }
 
+/** d3 tooltip **/
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 120px;
+  height: 45px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
 /** media queries **/
 
 @media screen and (min-width: 1300px) {
